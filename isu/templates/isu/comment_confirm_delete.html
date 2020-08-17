@@ -1,0 +1,11 @@
+댓글 {{object.content}} 삭제?
+
+<form action="" method="post">{%csrf_token%}
+    <input type="submit" class="btn btn-danger" value='go' id="btn">
+
+</form>
+
+
+<script>
+    btn = document.querySelector('#btn').click()
+</script>

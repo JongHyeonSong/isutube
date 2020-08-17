@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    {% if myList %}
+    <h1>내가 올린 영상들</h1>
+    {% else %}
+    <h1>새 영상을 올려주세요</h1>
+    {% endif %}
+<div class="row">
+{% for video in myList %}
+<div class="col-6" >
+
+        <div class="card">
+        <img src="{{video.photo.url}}" class="w-100" alt="">
+        <a href="{% url 'isu:video_detail' video.pk %}">
+            <h2>{{video.title}}</h2>
+        </a>
+    </div>
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock  %}

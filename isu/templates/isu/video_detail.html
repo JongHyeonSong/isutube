@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% load bootstrap4 %}
+
+
+
+{% block content %}
+<!-- <video controls class='w-100'>
+    <source src="{{video.file.url}}">
+</video> -->
+<div>
+<h4>{{video.title}}</h4>
+작성자 :{{video.author.email|default:video.author.username}}
+    {% if request.user in video.like.all %}
+    <a href="{% url 'isu:like_update' video.pk %}">
+    <i class="fa fa-heart text-danger"></i></a>
+    {% else %}
+    <a href="{% url 'isu:like_update' video.pk %}">
+    <i class="fa fa-heart text-dark"></i></a>
+    {% endif %}
+</div>
+
+
+{{video.description|linebreaks}}
+
+
+<hr>
+<div>
+조회수 : {{video.view_count}}
+댓글 : ({{video.comment_set.all.count}})
+따봉 : ({{video.like.all.count}})
+{% if video.author == request.user %}
+    <a href="{% url 'isu:video_update' video.pk %}" class="btn btn-success">수정</a>
+    <a href="{% url 'isu:video_delete' video.pk %}" class="btn btn-danger">삭제</a>
+{% endif %}
+</div>
+
+<form action="{% url 'isu:comment_create' video.pk %}" method="post">{%csrf_token%}
+    {%bootstrap_form comment_form layout="inline" %}
+    <input type="submit" value="저장" class="btn btn-danger">
+</form>
+
+<div class="comment-list">
+    <!-- sort(attribute='rating', reverse = True)  -->
+{% for comment in video.comment_set.all %}
+    <div class="comment">
+        
+        {{comment.content|linebreaks}}
+        <div>
+        작성자 : {{comment.author}}, {{comment.created_at|timesince}}전
+        {% if user == comment.author %}
+        <a href="{% url 'isu:comment_delete' video.pk comment.pk %}" class="btn btn-outline-danger btn-sm">삭제</a>
+        {% endif %}
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

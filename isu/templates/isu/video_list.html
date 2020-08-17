@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+
+<div class="row">
+    {% for video in object_list %}
+    <div class="col-4">
+        <div class="card">
+            <img src="{{video.photo.url}}" class='w-100' style="height:400px" alt="">
+            <div class="card-body">
+                <a href="{% url 'isu:video_detail' video.pk %}">
+                    <strong>{{video.title}}</strong>
+                    <p class='small'>
+                        {{video.description|truncatechars:30}}
+                    </p>
+                    <p>
+                        {{video.created_at|timesince}}전
+                        조회수:({{video.view_count}})
+                        좋아요:({{video.thumbUp}})
+                    </p>
+
+                </a>
+                
+            </div>
+        </div>
+    </div>
+    {% endfor  %}
+</div>
+<div style="display:flex; justify-content: center;">
+{% bootstrap_pagination page_obj %}</div>
+<hr>
+<a href="{% url 'isu:video_create' %}">업로드</a>
+{% endblock %}

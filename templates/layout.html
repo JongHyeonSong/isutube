@@ -1,0 +1,65 @@
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISU</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% bootstrap_css %}
+    {% bootstrap_jquery %}
+    {% bootstrap_javascript %}
+    <style>
+        .comment{
+            background: #f7f7f7;
+            border-radius: 5px;
+            border: 1px solid rgb(211, 211, 211);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a href="{% url 'root' %}" class="navbar-brand">
+                <i class="fa fa-youtube-play text-danger mr-1"></i>
+                ISU
+            </a>
+            
+            <a href=""></a>
+            <form action="{% url 'isu:video_list' %}" method="get" class="form-inline">
+                <input type="text" class="form-control mr-2" name='q' value="" placeholder="...">
+                <input type="submit" class="btn btn-danger" value="찾기">
+            </form>
+            
+
+
+            <div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" style="margin-right:1px">
+                        <i class="fa fa-user fa-lg"></i>
+                    </a>
+                    {{request.user}}님 환영합니다
+                    <a href="{% url 'isu:video_create' %}" class="btn btn-danger">업로드</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-info">로그아웃</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-danger">로그인</a>
+                    <a href="{% url 'signup' %}" class="btn btn-danger">회원가입</a>
+                {% endif %}
+            </div>
+
+        </nav>
+
+        <div class="card">
+            <div class="card-body">
+                {% block content %}
+                {% endblock%}
+            </div>
+        </div>
+
+    copy 234234
+    </div>
+</body>
+</html>
