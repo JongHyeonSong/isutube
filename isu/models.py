@@ -14,8 +14,6 @@ class Video(models.Model):
     like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_post', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
     #모델 수정/업데이트후에 여기로 오게된다
     def get_absolute_url(self):
         return reverse('isu:video_detail', args=[self.pk])

@@ -6,6 +6,7 @@ from .forms import VideoForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.db.models import F
+from django.contrib.auth.decorators import login_required
 
 class VideoListView(ListView):
     model = Video
@@ -45,7 +46,7 @@ class VideoDetailView(DetailView):
         context['comment_form'] = CommentForm
         return context
 
-class VideoUpdateView(UpdateView):
+class VideoUpdateView(LoginRequiredMixin, UpdateView):
     model = Video
     form_class = VideoForm
     template_name = 'form.html'
@@ -83,7 +84,7 @@ class CommentDeleteView(DeleteView):
 
 
 
-
+@login_required
 def likeUpdate(request,pk):
     video = get_object_or_404(Video, pk=pk)
 

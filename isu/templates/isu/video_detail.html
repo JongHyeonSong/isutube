@@ -45,12 +45,12 @@
     <div class="comment">
         
         {{comment.content|linebreaks}}
-        <div>
+        <div><small>
         작성자 : {{comment.author}}, {{comment.created_at|timesince}}전
         {% if user == comment.author %}
         <a href="{% url 'isu:comment_delete' video.pk comment.pk %}" class="btn btn-outline-danger btn-sm">삭제</a>
         {% endif %}
-        </div>
+    </small></div>
     </div>
 {% endfor %}
 </div>
