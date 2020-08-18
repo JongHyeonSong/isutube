@@ -1,6 +1,9 @@
-정말 {{object.title}} 삭제?
+
+<div style="margin:auto">
+정말 {{object.title}}를 삭제하시겠습니까?
 
 <form action="" method="post">{%csrf_token%}
-    <input type="submit" class="btn btn-danger" value='go'>
+    <input type="submit" class="btn btn-danger" value='네'>
 
 </form>
+</div>

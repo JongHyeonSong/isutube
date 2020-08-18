@@ -1,14 +1,16 @@
+import os
 from django.shortcuts import render, get_object_or_404, resolve_url, redirect
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView,ListView
 from .models import Video, Comment
 from .forms import VideoForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-
+from django.db.models import F
 
 class VideoListView(ListView):
     model = Video
     paginate_by= 3
+
 
     def get_queryset(self):
         videoList = super().get_queryset()
@@ -31,6 +33,12 @@ class VideoCreateView(LoginRequiredMixin, CreateView):
 
 class VideoDetailView(DetailView):
     model = Video
+
+    def get_object(self, queryset=None):
+        pk = self.kwargs['pk']
+        Video.objects.filter(id=pk).update(view_count = F('view_count')+1)
+        return super().get_object(queryset=queryset)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -76,7 +84,6 @@ class CommentDeleteView(DeleteView):
 
 
 
-from django.http import HttpResponse
 def likeUpdate(request,pk):
     video = get_object_or_404(Video, pk=pk)
 
@@ -84,4 +91,5 @@ def likeUpdate(request,pk):
         video.like.remove(request.user)
     else:
         video.like.add(request.user)
+        
     return redirect('isu:video_detail', pk)

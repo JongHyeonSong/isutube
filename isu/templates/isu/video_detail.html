@@ -4,9 +4,9 @@
 
 
 {% block content %}
-<!-- <video controls class='w-100'>
+<video controls class='w-100'>
     <source src="{{video.file.url}}">
-</video> -->
+</video>
 <div>
 <h4>{{video.title}}</h4>
 작성자 :{{video.author.email|default:video.author.username}}
@@ -24,7 +24,7 @@
 
 
 <hr>
-<div>
+<div style="text-align:right;">
 조회수 : {{video.view_count}}
 댓글 : ({{video.comment_set.all.count}})
 따봉 : ({{video.like.all.count}})
@@ -38,7 +38,7 @@
     {%bootstrap_form comment_form layout="inline" %}
     <input type="submit" value="저장" class="btn btn-danger">
 </form>
-
+<hr>
 <div class="comment-list">
     <!-- sort(attribute='rating', reverse = True)  -->
 {% for comment in video.comment_set.all %}

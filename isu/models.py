@@ -19,7 +19,8 @@ class Video(models.Model):
     #모델 수정/업데이트후에 여기로 오게된다
     def get_absolute_url(self):
         return reverse('isu:video_detail', args=[self.pk])
-    class Meta:
+
+    class Meta: 
         ordering=['-id']
     
 class Comment(models.Model):
@@ -29,5 +30,5 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
-            ordering=['-id']
+        ordering=['-id']
     
